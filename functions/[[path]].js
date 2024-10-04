@@ -1,14 +1,17 @@
 export async function onRequest({ request }) {
-	const url = new URL(request.url)
+  const url = new URL(request.url)
 
-	const proxyUrl = 'https://startblacksrats.info'
-	const backendUrl = `${proxyUrl}${url.pathname}`
+  const proxyUrl = 'https://startblacksrats.info'
+  const backendUrl = ${proxyUrl}${url.pathname}
 
-	const response = await fetch(backendUrl, {
-		method: request.method,
-		headers: request.headers,
-		body: request.body,
-	})
+  const headers = new Headers(request.headers)
+  headers.set('IP', headers.get('CF-Connecting-IP'))
 
-	return response
+  const response = await fetch(backendUrl, {
+    method: request.method,
+    headers: headers,
+    body: request.body,
+  })
+
+  return response
 }
